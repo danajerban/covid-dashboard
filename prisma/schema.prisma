@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Country {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  isoCode   String   @unique
+  latitude  Float
+  longitude Float
+  covidData CovidData[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CovidData {
+  id        String   @id @default(cuid())
+  date      DateTime
+  confirmed Int
+  deaths    Int
+  recovered Int
+  active    Int
+  country   Country  @relation(fields: [countryId], references: [id])
+  countryId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([countryId])
+}
