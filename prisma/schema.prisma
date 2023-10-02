@@ -6,7 +6,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
+model Admin {
   id        String   @id @default(cuid())
   username  String   @unique
   password  String
