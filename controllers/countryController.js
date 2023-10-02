@@ -10,8 +10,8 @@ async function getCountries(req, res) {
     });
     res.json(data);
   } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).send('Internal Server Error');
+    console.error("Error fetching data:", error);
+    res.status(500).send("Internal Server Error");
   }
 }
 
