@@ -1,19 +1,19 @@
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const adminController = require('./controllers/adminController');
-const countryController = require('./controllers/countryController');
-const authController = require('./controllers/authController');
+const adminController = require("./controllers/adminController");
+const countryController = require("./controllers/countryController");
+const authController = require("./controllers/authController");
 
 // Country Routes
-router.get('/', countryController.getCountries);
+router.get("/", countryController.getCountries);
 
 // Admin Routes
-router.get('/admin/search', adminController.searchCountries);
-router.post('/admin/update/:countryId', adminController.updateData);
-router.delete('/admin/delete/:countryId', adminController.deleteCountry);
+router.get("/admin/search", adminController.searchCountries);
+router.post("/admin/update/:countryId", adminController.updateData);
+router.delete("/admin/delete/:countryId", adminController.deleteCountry);
 
 // Auth Routes
-router.post('/login', authController.login);
+router.post("/login", authController.login);
+router.post("/register", authController.register);
 
 module.exports = router;

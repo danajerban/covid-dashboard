@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AdminPage() {
   const [query, setQuery] = useState("");
@@ -12,6 +13,12 @@ function AdminPage() {
     recovered: "",
     active: "",
   });
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   const handleSearch = async () => {
     try {
@@ -55,8 +62,14 @@ function AdminPage() {
     setSelectedCountry(country);
   };
 
+  const handleGoToHomepage = () => {
+    navigate("/");
+  };
+
   return (
     <div className="p-4">
+      <button onClick={handleGoToHomepage}>Go to Homepage</button>
+      <button onClick={handleLogout}>Logout</button>
       <input
         type="text"
         placeholder="Search countries"
