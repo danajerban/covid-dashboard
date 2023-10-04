@@ -6,7 +6,7 @@ const authController = require("./controllers/authController");
 
 // Country Routes
 router.get("/", countryController.getCountries);
-
+router.get("/total-cases", countryController.getTotalCases);
 // Admin Routes
 router.get("/admin/search", adminController.searchCountries);
 router.post("/admin/update/:countryId", adminController.updateData);

@@ -19,7 +19,7 @@ model Admin {
 }
 
 model Country {
-  id        String   @id @default(cuid())
+  id        String   @id @default(cuid()) 
   name      String   @unique
   isoCode   String   @unique
   latitude  Float
@@ -41,5 +41,6 @@ model CovidData {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([countryId])
+
+  @@index([countryId, date])
 }
