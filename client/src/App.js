@@ -3,6 +3,7 @@ import Homepage from "./components/Homepage";
 import Login from "./components/Login";
 import AdminPage from "./components/AdminPage";
 import Register from "./components/Register";
+import CountryPage from "./components/CountryPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/country/:countryId" element={<CountryPage />} />
         </Routes>
       </Router>
     </>

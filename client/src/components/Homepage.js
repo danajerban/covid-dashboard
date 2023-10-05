@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import GlobalHeatMapDeaths from "./GlobalHeatMapDeaths";
 import ChoroplethGlobalMapCases from "./ChoroplethGlobalMapCases";
+import SearchBar from "./SearchBar";
 
 function Homepage() {
   const [data, setData] = useState(null);
@@ -27,6 +28,7 @@ function Homepage() {
   return (
     <div className="p-4">
       <button onClick={handleGoToLogin}>Go to Login</button>
+      <SearchBar />
       <ChoroplethGlobalMapCases />
       <br></br>
       <GlobalHeatMapDeaths />
