@@ -20,4 +20,5 @@ router.post("/register", authController.register);
 // Chart Routes
 router.get("/search", searchController.searchCountry);
 router.get("/search/:countryId", searchController.getCountryData);
+router.get("/search/totals/:countryId", searchController.getCountryTotalCases);
 module.exports = router;

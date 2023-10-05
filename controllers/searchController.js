@@ -37,4 +37,22 @@ async function getCountryData(req, res) {
   }
 }
 
-module.exports = { searchCountry, getCountryData };
+async function getCountryTotalCases(req, res) {
+  const countryId = req.params.countryId;
+  try {
+    const covidData = await prisma.covidData.findFirst({
+      where: {
+        countryId: countryId,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
+    res.json(covidData);
+  } catch (error) {
+    console.error("Error fetching country data:", error);
+    res.status(500).send("Internal server error");
+  }
+}
+
+module.exports = { searchCountry, getCountryData, getCountryTotalCases };
