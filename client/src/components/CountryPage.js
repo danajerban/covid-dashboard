@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import LineChart from './LineChart';
-import PolarAreaChart from './PolarAreaChart';
+import PieChart from './PieChart';
 
 function CountryPage() {
   const { countryId } = useParams();
@@ -40,7 +40,7 @@ function CountryPage() {
     <div>
       <h1>Data for country ID {countryId}</h1>
       {data && <LineChart data={data} /> }
-      {totalData && <PolarAreaChart totalData={totalData} /> }
+      {totalData && <PieChart totalData={totalData} /> }
     </div>
   );
 }

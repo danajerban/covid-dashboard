@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-function PolarAreaChart({ totalData }) {
+function PieChart({ totalData }) {
   //console.log(totalData);
   const totalConfirmedCases = totalData.confirmed;
   const totalDeaths = totalData.deaths;
@@ -50,4 +50,4 @@ function PolarAreaChart({ totalData }) {
   );
 }
 
-export default PolarAreaChart;
+export default PieChart;
