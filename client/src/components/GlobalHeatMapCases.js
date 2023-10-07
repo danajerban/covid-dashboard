@@ -5,22 +5,14 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat/dist/leaflet-heat.js";
 
-const HeatmapLayer = ({ points }) => {
+const HeatmapLayer = ({ points, gradient }) => {
   const map = useMap();
   const heatRef = useRef(null);
-  //sources: https://leafletjs.com/examples/choropleth/ && https://www.patrick-wied.at/static/heatmapjs/plugin-leaflet-layer.html
-  // and Chat gpt for legend of the table and the math for the color intensity
+
   useEffect(() => {
     if (heatRef.current) {
       map.removeLayer(heatRef.current);
     }
-
-    const gradient = {
-      0.0: "green",
-      0.25: "orange",
-      0.5: "pink",
-      1.0: "red",
-    };
 
     heatRef.current = L.heatLayer(points, {
       radius: 20,
@@ -32,23 +24,23 @@ const HeatmapLayer = ({ points }) => {
 
     function updateHeatLayer() {
       const zoomLevel = map.getZoom();
-      const newRadius = Math.max(10, 30 - zoomLevel * 2); // Adjusted radius calculation
+      const newRadius = Math.max(10, 30 - zoomLevel * 2);
       const newBlur = Math.max(5, 15 - zoomLevel);
       heatRef.current.setOptions({ radius: newRadius, blur: newBlur });
     }
 
-    map.on("zoomend", updateHeatLayer);
+    map.on('zoomend', updateHeatLayer);
 
     return () => {
-      map.off("zoomend", updateHeatLayer);
+      map.off('zoomend', updateHeatLayer);
       map.removeLayer(heatRef.current);
     };
-  }, [map, points]);
+  }, [map, points, gradient]);
 
   return null;
 };
 
-const GlobalHeatMapDeaths = () => {
+const GlobalHeatMapCases = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -67,8 +59,15 @@ const GlobalHeatMapDeaths = () => {
   const heatData = data.map((item) => [
     item.latitude,
     item.longitude,
-    item.deaths,
+    item.confirmed,
   ]);
+
+  const gradient = {
+    0.0: "lightblue",
+    0.25: "#0000FF",
+    0.5: "blue",
+    1.0: "darkblue"
+  };
 
   return (
     <div style={{ margin: "0 auto" }}>
@@ -78,10 +77,12 @@ const GlobalHeatMapDeaths = () => {
         style={{ height: "80vh", width: "80%" }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {heatData.length > 0 && <HeatmapLayer points={heatData} />}
+        {heatData.length > 0 && (
+          <HeatmapLayer points={heatData} gradient={gradient} />
+        )}
       </MapContainer>
     </div>
   );
 };
 
-export default GlobalHeatMapDeaths;
+export default GlobalHeatMapCases;

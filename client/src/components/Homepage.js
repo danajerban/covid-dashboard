@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import GlobalHeatMapDeaths from "./GlobalHeatMapDeaths";
 import ChoroplethGlobalMapCases from "./ChoroplethGlobalMapCases";
 import SearchBar from "./SearchBar";
+import ChoroplethGlobalMapDeaths from "./ChoroplethGlobalMapDeaths";
+import GlobalHeatMapCases from "./GlobalHeatMapCases";
 
 function Homepage() {
   const [data, setData] = useState(null);
@@ -21,6 +23,7 @@ function Homepage() {
   //   fetchData();
   // }, []);
 
+
   const handleGoToLogin = () => {
     navigate("/login");
   };
@@ -31,7 +34,11 @@ function Homepage() {
       <SearchBar />
       <ChoroplethGlobalMapCases />
       <br></br>
+      <ChoroplethGlobalMapDeaths />
+      <br></br>
       <GlobalHeatMapDeaths />
+      <br></br>
+      <GlobalHeatMapCases />
     </div>
   );
 }

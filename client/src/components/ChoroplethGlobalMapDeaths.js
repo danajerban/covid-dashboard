@@ -8,32 +8,32 @@ import geojsonData from "../countries.geo.json";
 //sources: https://leafletjs.com/examples/choropleth/ && https://github.com/johan/world.geo.json for GeoJSON data
 // and Chat gpt for legend of the table and the math for the color intensity
 
-const getColor = (d, maxConfirmed) => {
-  const intensity = Math.log(d + 1) / Math.log(maxConfirmed + 1);
+const getColor = (d, maxDeaths) => {
+  const intensity = Math.log(d + 1) / Math.log(maxDeaths + 1);
   return intensity > 0.9
-      ? "#8b0000" 
-      : intensity > 0.8
-      ? "#b22222"
-      : intensity > 0.7
-      ? "#dc143c"
-      : intensity > 0.6
-      ? "#ff4500"
-      : intensity > 0.5
-      ? "#ff6347"
-      : intensity > 0.4
-      ? "#ff7f50"
-      : intensity > 0.3
-      ? "#ffa07a"
-      : intensity > 0.2
-      ? "#ffb6c1"
-      : intensity > 0.1
-      ? "#ffc0cb"
-      : "#ffd1dc";
+    ? "#800026"
+    : intensity > 0.8
+    ? "#BD0026"
+    : intensity > 0.7
+    ? "#E31A1C"
+    : intensity > 0.6
+    ? "#FC4E2A"
+    : intensity > 0.5
+    ? "#FD8D3C"
+    : intensity > 0.4
+    ? "#FEB24C"
+    : intensity > 0.3
+    ? "#FED976"
+    : intensity > 0.2
+    ? "#FFEDA0"
+    : intensity > 0.1
+    ? "#green"
+    : "yellow";
 };
 
-const countryStyle = (feature, maxConfirmed) => {
+const countryStyle = (feature, maxDeaths) => {
   return {
-    fillColor: getColor(feature.properties.confirmed, maxConfirmed),
+    fillColor: getColor(feature.properties.deaths, maxDeaths),
     weight: 2,
     opacity: 1,
     color: "white",
@@ -41,32 +41,30 @@ const countryStyle = (feature, maxConfirmed) => {
     fillOpacity: 0.7,
   };
 };
-const Legend = ({ maxConfirmed }) => {
+const Legend = ({ maxDeaths }) => {
   const map = useMap();
 
   function getColor(d) {
-    return d > maxConfirmed * 0.9
-      ? "#8b0000"
-      : d > maxConfirmed * 0.8
-      ? "#b22222"
-      : d > maxConfirmed * 0.7
-      ? "#dc143c"
-      : d > maxConfirmed * 0.6
-      ? "#ff4500"
-      : d > maxConfirmed * 0.5
-      ? "#ff6347"
-      : d > maxConfirmed * 0.4
-      ? "#ff7f50"
-      : d > maxConfirmed * 0.3
-      ? "#ffa07a"
-      : d > maxConfirmed * 0.2
-      ? "#ffb6c1"
-      : d > maxConfirmed * 0.1
-      ? "#ffc0cb"
-      : "#ffd1dc";
+    return d > maxDeaths * 0.9
+      ? "#800026"
+      : d > maxDeaths * 0.8
+      ? "#BD0026"
+      : d > maxDeaths * 0.7
+      ? "#E31A1C"
+      : d > maxDeaths * 0.6
+      ? "#FC4E2A"
+      : d > maxDeaths * 0.5
+      ? "#FD8D3C"
+      : d > maxDeaths * 0.4
+      ? "#FEB24C"
+      : d > maxDeaths * 0.3
+      ? "#FED976"
+      : d > maxDeaths * 0.2
+      ? "#FFEDA0"
+      : d > maxDeaths * 0.1
+      ? "green"
+      : "yellow";
   }
-
-
 
   useEffect(() => {
     const legend = L.control({ position: "bottomright" });
@@ -77,10 +75,10 @@ const Legend = ({ maxConfirmed }) => {
       let labels = [];
 
       for (let i = 0; i < grades.length; i++) {
-        const from = Math.round(grades[i] * maxConfirmed);
+        const from = Math.round(grades[i] * maxDeaths);
         const to = grades[i + 1]
-          ? Math.round(grades[i + 1] * maxConfirmed)
-          : maxConfirmed;
+          ? Math.round(grades[i + 1] * maxDeaths)
+          : maxDeaths;
         labels.push(
           '<div style="background-color:' +
             getColor(from + 1) +
@@ -99,25 +97,25 @@ const Legend = ({ maxConfirmed }) => {
     return () => {
       map.removeControl(legend);
     };
-  }, [map, maxConfirmed]);
+  }, [map, maxDeaths]);
 
   return null;
 };
-const ChoroplethGlobalMapCases = () => {
+const ChoroplethGlobalMapDeaths = () => {
   const [data, setData] = useState([]);
   const [geoJsonData, setGeoJsonData] = useState(null);
-  const [maxConfirmed, setMaxConfirmed] = useState(0);
+  const [maxDeaths, setMaxDeaths] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:5000/total-cases");
         setData(response.data);
-        const maxConfirmedValue = response.data.reduce(
-          (max, item) => Math.max(max, item.confirmed),
+        const maxDeathsValue = response.data.reduce(
+          (max, item) => Math.max(max, item.deaths),
           0
         );
-        setMaxConfirmed(maxConfirmedValue);
+        setMaxDeaths(maxDeathsValue);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -133,8 +131,8 @@ const ChoroplethGlobalMapCases = () => {
           const countryData = data.find(
             (item) => item.country === feature.properties.name
           );
-          feature.properties.confirmed = countryData
-            ? countryData.confirmed
+          feature.properties.deaths = countryData
+            ? countryData.deaths
             : 0;
           return feature;
         }
@@ -154,13 +152,13 @@ const ChoroplethGlobalMapCases = () => {
         {geoJsonData && (
           <GeoJSON
             data={geoJsonData}
-            style={(feature) => countryStyle(feature, maxConfirmed)}
+            style={(feature) => countryStyle(feature, maxDeaths)}
           />
         )}
-        <Legend maxConfirmed={maxConfirmed} />
+        <Legend maxDeaths={maxDeaths} />
       </MapContainer>
     </div>
   );
 };
 
-export default ChoroplethGlobalMapCases;
+export default ChoroplethGlobalMapDeaths;

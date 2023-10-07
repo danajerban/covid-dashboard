@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
+import zoomPlugin from 'chartjs-plugin-zoom';
 
+Chart.register(zoomPlugin);
 //sources: https://www.chartjs.org/docs/latest/charts/line.html & https://www.youtube.com/@ChartJS-tutorials
 
 function LineChart({ data }) {
@@ -75,6 +77,23 @@ function LineChart({ data }) {
             },
           },
         },
+        plugins: {
+          zoom: {
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: true
+              },
+              mode: 'xy',
+            },
+            pan: {
+              enabled: true,
+              mode: 'xy',
+            },
+          }
+        },
       },
     });
     return () => {
@@ -127,6 +146,10 @@ function LineChart({ data }) {
     ],
   };
 
+  function resetZoom() {
+    chartInstance.current.resetZoom();
+  }
+
   function filterDates() {
     //we use setHours(0, 0, 0, 0) to skip the time part for all cases because we will work with milliseconds time
     const startDate1 = new Date(document.getElementById("startDate").value);
@@ -176,6 +199,7 @@ function LineChart({ data }) {
       Start:
       <input type="date" id="startDate" min="2020-01-22" max="2020-07-26" />
       End: <input type="date" id="endDate" min="2020-01-23" max="2020-07-27" />
+      <button onClick={resetZoom}>RZoom</button>
       <button onClick={filterDates}>Filter</button>
       <button onClick={resetDates}>Reset</button>
     </div>
