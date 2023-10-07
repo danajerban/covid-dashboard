@@ -4,15 +4,24 @@ services:
   db:
     image: 'postgres:15.2'
     ports:
-      - '2345:5432'
+      - '5432:5432'
     environment:
       POSTGRES_USER: 'erbandanaj'
       POSTGRES_PASSWORD: 'think'
       POSTGRES_DB: 'covid_dashboard'
+
   server:
     build: .
     ports:
       - '5000:5000'
-    environment:
-      DATABASE_URL: 'postgresql://erbandanaj:think@db:5432/covid_dashboard'
-      JWT_SECRET: 'secretKEY123'
+      - '5555:5555'
+    command: ["/bin/bash", "./startup.sh"]
+    env_file:
+      - .env
+
+
+  client:
+    build: ./client
+    ports:
+      - '3000:3000'
+    command: npm run start

@@ -10,6 +10,12 @@ const prisma = new PrismaClient();
 async function populateCountries() {
   const countryCoords = {};
 
+  const existingCountries = await prisma.country.findMany();
+  if (existingCountries.length > 0) {
+    console.log("Countries already seeded");
+    return;
+  }
+
   await new Promise((resolve, reject) => {
     fs.createReadStream("./prisma/covid_19_clean_complete.csv")
       .pipe(csv())
@@ -46,6 +52,12 @@ async function populateCountries() {
 }
 
 async function populateCovidData() {
+  const existingCovidData = await prisma.covidData.findMany();
+  if (existingCovidData.length > 0) {
+    console.log("Covid data already seeded");
+    return;
+  }
+
   return new Promise((resolve, reject) => {
     fs.createReadStream("./prisma/covid_19_clean_complete.csv")
       .pipe(csv())
@@ -74,6 +86,7 @@ async function populateCovidData() {
 
 populateCountries()
   .then(() => {
+    prisma.$connect();
     return populateCovidData();
   })
   .then(async () => {
