@@ -63,24 +63,26 @@ const GlobalHeatMapCases = () => {
   ]);
 
   const gradient = {
-    0.0: "lightblue",
-    0.25: "#0000FF",
-    0.5: "blue",
-    1.0: "darkblue"
+    0.0: "green",
+    0.25: "orange",
+    0.5: "pink",
+    1.0: "red",
   };
 
   return (
-    <div style={{ margin: "0 auto" }}>
-      <MapContainer
-        center={[0, 0]}
-        zoom={2}
-        style={{ height: "80vh", width: "80%" }}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {heatData.length > 0 && (
-          <HeatmapLayer points={heatData} gradient={gradient} />
-        )}
-      </MapContainer>
+    <div className="flex justify-center">
+      <div className="w-9/12">
+        <MapContainer
+          center={[0, 0]}
+          zoom={2}
+          style={{ height: "80vh", width: "100%" }}  // Ensure width is 100%
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {heatData.length > 0 && (
+            <HeatmapLayer points={heatData} gradient={gradient} />
+          )}
+        </MapContainer>
+      </div>
     </div>
   );
 };

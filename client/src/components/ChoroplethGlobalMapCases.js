@@ -11,7 +11,7 @@ import geojsonData from "../countries.geo.json";
 const getColor = (d, maxConfirmed) => {
   const intensity = Math.log(d + 1) / Math.log(maxConfirmed + 1);
   return intensity > 0.9
-      ? "#8b0000" 
+      ? "#8b0000"
       : intensity > 0.8
       ? "#b22222"
       : intensity > 0.7
@@ -84,7 +84,7 @@ const Legend = ({ maxConfirmed }) => {
         labels.push(
           '<div style="background-color:' +
             getColor(from + 1) +
-            '; width: 24px; height: 24px; float: left; opacity: 0.7;"></div> ' +
+            '; width: 24px; height: 24px; float: left; opacity: 0.7; margin-right: 5px;"></div> ' +
             from +
             (to ? "&ndash;" + to + "<br>" : "+")
         );
@@ -144,21 +144,23 @@ const ChoroplethGlobalMapCases = () => {
   }, [data]);
 
   return (
-    <div style={{ margin: "0 auto" }}>
-      <MapContainer
-        center={[0, 0]}
-        zoom={2}
-        style={{ height: "80vh", width: "80%" }}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {geoJsonData && (
-          <GeoJSON
-            data={geoJsonData}
-            style={(feature) => countryStyle(feature, maxConfirmed)}
-          />
-        )}
-        <Legend maxConfirmed={maxConfirmed} />
-      </MapContainer>
+    <div className="flex justify-center">
+      <div className="w-9/12">
+        <MapContainer
+          center={[0, 0]}
+          zoom={2}
+          style={{ height: "80vh", width: "100%" }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {geoJsonData && (
+            <GeoJSON
+              data={geoJsonData}
+              style={(feature) => countryStyle(feature, maxConfirmed)}
+            />
+          )}
+          <Legend maxConfirmed={maxConfirmed} />
+        </MapContainer>
+      </div>
     </div>
   );
 };

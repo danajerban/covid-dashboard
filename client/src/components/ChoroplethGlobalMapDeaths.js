@@ -11,24 +11,24 @@ import geojsonData from "../countries.geo.json";
 const getColor = (d, maxDeaths) => {
   const intensity = Math.log(d + 1) / Math.log(maxDeaths + 1);
   return intensity > 0.9
-    ? "#800026"
-    : intensity > 0.8
-    ? "#BD0026"
-    : intensity > 0.7
-    ? "#E31A1C"
-    : intensity > 0.6
-    ? "#FC4E2A"
-    : intensity > 0.5
-    ? "#FD8D3C"
-    : intensity > 0.4
-    ? "#FEB24C"
-    : intensity > 0.3
-    ? "#FED976"
-    : intensity > 0.2
-    ? "#FFEDA0"
-    : intensity > 0.1
-    ? "#green"
-    : "yellow";
+      ? "#8b0000"
+      : intensity > 0.8
+      ? "#b22222"
+      : intensity > 0.7
+      ? "#dc143c"
+      : intensity > 0.6
+      ? "#ff4500"
+      : intensity > 0.5
+      ? "#ff6347"
+      : intensity > 0.4
+      ? "#ff7f50"
+      : intensity > 0.3
+      ? "#ffa07a"
+      : intensity > 0.2
+      ? "#ffb6c1"
+      : intensity > 0.1
+      ? "#ffc0cb"
+      : "#ffd1dc";
 };
 
 const countryStyle = (feature, maxDeaths) => {
@@ -46,24 +46,24 @@ const Legend = ({ maxDeaths }) => {
 
   function getColor(d) {
     return d > maxDeaths * 0.9
-      ? "#800026"
+      ? "#8b0000"
       : d > maxDeaths * 0.8
-      ? "#BD0026"
+      ? "#b22222"
       : d > maxDeaths * 0.7
-      ? "#E31A1C"
+      ? "#dc143c"
       : d > maxDeaths * 0.6
-      ? "#FC4E2A"
+      ? "#ff4500"
       : d > maxDeaths * 0.5
-      ? "#FD8D3C"
+      ? "#ff6347"
       : d > maxDeaths * 0.4
-      ? "#FEB24C"
+      ? "#ff7f50"
       : d > maxDeaths * 0.3
-      ? "#FED976"
+      ? "#ffa07a"
       : d > maxDeaths * 0.2
-      ? "#FFEDA0"
+      ? "#ffb6c1"
       : d > maxDeaths * 0.1
-      ? "green"
-      : "yellow";
+      ? "#ffc0cb"
+      : "#ffd1dc";
   }
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const Legend = ({ maxDeaths }) => {
         labels.push(
           '<div style="background-color:' +
             getColor(from + 1) +
-            '; width: 24px; height: 24px; float: left; opacity: 0.7;"></div> ' +
+            '; width: 24px; height: 24px; float: left; opacity: 0.7; margin-right: 5px;"></div> ' +
             from +
             (to ? "&ndash;" + to + "<br>" : "+")
         );
@@ -142,21 +142,23 @@ const ChoroplethGlobalMapDeaths = () => {
   }, [data]);
 
   return (
-    <div style={{ margin: "0 auto" }}>
-      <MapContainer
-        center={[0, 0]}
-        zoom={2}
-        style={{ height: "80vh", width: "80%" }}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {geoJsonData && (
-          <GeoJSON
-            data={geoJsonData}
-            style={(feature) => countryStyle(feature, maxDeaths)}
-          />
-        )}
-        <Legend maxDeaths={maxDeaths} />
-      </MapContainer>
+    <div className="flex justify-center">
+      <div className="w-9/12">
+        <MapContainer
+          center={[0, 0]}
+          zoom={2}
+          style={{ height: "80vh", width: "100%" }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {geoJsonData && (
+            <GeoJSON
+              data={geoJsonData}
+              style={(feature) => countryStyle(feature, maxDeaths)}
+            />
+          )}
+          <Legend maxDeaths={maxDeaths} />
+        </MapContainer>
+      </div>
     </div>
   );
 };

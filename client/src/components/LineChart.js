@@ -194,14 +194,25 @@ function LineChart({ data }) {
   }
 
   return (
-    <div style={{ width: "1000px", height: "800px" }}>
-      <canvas ref={chartRef}></canvas>
-      Start:
-      <input type="date" id="startDate" min="2020-01-22" max="2020-07-26" />
-      End: <input type="date" id="endDate" min="2020-01-23" max="2020-07-27" />
-      <button onClick={resetZoom}>RZoom</button>
-      <button onClick={filterDates}>Filter</button>
-      <button onClick={resetDates}>Reset</button>
+    <div className="flex w-11/12 mx-auto bg-gray-100 rounded-lg items-center">
+        <div className="flex-grow relative" style={{ height: "70vh" }}>
+            <canvas ref={chartRef}></canvas>
+        </div>
+        <div className="flex flex-col items-center space-y-4 ml-1" style={{ minWidth: "150px", alignSelf: 'center' }}>
+            <div className="w-full flex flex-col space-y-1">
+                Start Date:
+                <input type="date" id="startDate" min="2020-01-22" max="2020-07-26" className="bg-pink-300 text-white rounded-lg p-2 w-full" />
+                End Date:
+                <input type="date" id="endDate" min="2020-01-23" max="2020-07-27" className="bg-pink-300 text-white rounded-lg p-2 w-full" />
+            </div>
+            <div className="w-full flex flex-col space-y-1 mt-4">
+                <button onClick={filterDates} className="bg-green-300 text-black rounded-lg p-2 w-full">Filter</button>
+                <button onClick={resetDates} className="bg-pink-800 text-white rounded-lg p-2 w-full">Reset</button>
+            </div>
+            <div className="w-full mt-4">
+                <button onClick={resetZoom} className="bg-orange-300 text-black rounded-lg p-2 w-full">Reset Zoom</button>
+            </div>
+        </div>
     </div>
   );
 }

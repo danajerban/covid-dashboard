@@ -44,9 +44,10 @@ function PieChart({ totalData }) {
   };
 
   return (
-    <div style={{ width: "500px", height: "400px" }}>
+    <div className="flex justify-center items-center" style={{ width: "700px", height: "500px" }}>
       <canvas ref={chartRef}></canvas>
     </div>
+
   );
 }
 

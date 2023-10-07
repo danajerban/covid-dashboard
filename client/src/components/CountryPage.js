@@ -1,4 +1,3 @@
-// components/CountryPage.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -37,10 +36,15 @@ function CountryPage() {
   }, []);
 
   return (
-    <div>
-      <h1>Data for country ID {countryId}</h1>
-      {data && <LineChart data={data} /> }
-      {totalData && <PieChart totalData={totalData} /> }
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
+      <h1 className="text-xl font-bold mb-4 text-center w-full">Data for country ID {countryId}</h1>
+      <div className="flex justify-center w-full mb-16">
+        {data && <LineChart data={data} />}
+      </div>
+      <p className="text-center w-full mb-4">Complete statistics for "country name" from "22 January 2020 until 20 June 2020"</p>
+      <div className="flex justify-center w-full">
+        {totalData && <PieChart totalData={totalData} />}
+      </div>
     </div>
   );
 }
