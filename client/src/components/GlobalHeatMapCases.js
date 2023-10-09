@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat/dist/leaflet-heat.js";
 
-const HeatmapLayer = ({ points, gradient }) => {
+const HeatmapLayer = ({ points }) => {
   const map = useMap();
   const heatRef = useRef(null);
 
@@ -14,28 +14,37 @@ const HeatmapLayer = ({ points, gradient }) => {
       map.removeLayer(heatRef.current);
     }
 
+    const gradient = {
+      0.0: "green",
+      0.5: "orange",
+      1.0: "red",
+    };
+
+    const maxCases = Math.max(...points.map((point) => point[2]));
+    console.log({ maxCases });
+
     heatRef.current = L.heatLayer(points, {
       radius: 20,
-      blur: 15,
-      max: 1.0,
+      blur: 10,
+      max: maxCases, // Set max value based on the points data
       minOpacity: 0.6,
       gradient,
     }).addTo(map);
 
     function updateHeatLayer() {
       const zoomLevel = map.getZoom();
-      const newRadius = Math.max(10, 30 - zoomLevel * 2);
-      const newBlur = Math.max(5, 15 - zoomLevel);
+      const newRadius = Math.max(10, 30 - zoomLevel);
+      const newBlur = Math.max(5, 20 - zoomLevel);
       heatRef.current.setOptions({ radius: newRadius, blur: newBlur });
     }
 
-    map.on('zoomend', updateHeatLayer);
+    map.on("zoomend", updateHeatLayer);
 
     return () => {
-      map.off('zoomend', updateHeatLayer);
+      map.off("zoomend", updateHeatLayer);
       map.removeLayer(heatRef.current);
     };
-  }, [map, points, gradient]);
+  }, [map, points]); // suggested practice
 
   return null;
 };
@@ -62,25 +71,16 @@ const GlobalHeatMapCases = () => {
     item.confirmed,
   ]);
 
-  const gradient = {
-    0.0: "green",
-    0.25: "orange",
-    0.5: "pink",
-    1.0: "red",
-  };
-
   return (
     <div className="flex justify-center">
       <div className="w-9/12">
         <MapContainer
           center={[0, 0]}
           zoom={2}
-          style={{ height: "80vh", width: "100%" }}  // Ensure width is 100%
+          style={{ height: "80vh", width: "100%" }}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          {heatData.length > 0 && (
-            <HeatmapLayer points={heatData} gradient={gradient} />
-          )}
+          {heatData.length > 0 && <HeatmapLayer points={heatData} />}
         </MapContainer>
       </div>
     </div>

@@ -5,11 +5,12 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat/dist/leaflet-heat.js";
 
+// sources: https://www.patrick-wied.at/static/heatmapjs/plugin-leaflet-layer.html
+// and Chat gpt for the math behind
+
 const HeatmapLayer = ({ points }) => {
   const map = useMap();
   const heatRef = useRef(null);
-  //sources: https://leafletjs.com/examples/choropleth/ && https://www.patrick-wied.at/static/heatmapjs/plugin-leaflet-layer.html
-  // and Chat gpt for legend of the table and the math for the color intensity
   useEffect(() => {
     if (heatRef.current) {
       map.removeLayer(heatRef.current);
@@ -17,23 +18,24 @@ const HeatmapLayer = ({ points }) => {
 
     const gradient = {
       0.0: "green",
-      0.25: "orange",
-      0.5: "pink",
+      0.5: "orange",
       1.0: "red",
     };
 
+    const maxDeaths = Math.max(...points.map((point) => point[2]));
+
     heatRef.current = L.heatLayer(points, {
       radius: 20,
-      blur: 15,
-      max: 1.0,
+      blur: 10,
+      max: maxDeaths, // Set max value based on the points data
       minOpacity: 0.6,
       gradient,
     }).addTo(map);
-
+    console.log({ maxDeaths });
     function updateHeatLayer() {
       const zoomLevel = map.getZoom();
-      const newRadius = Math.max(10, 30 - zoomLevel * 2); // Adjusted radius calculation
-      const newBlur = Math.max(5, 15 - zoomLevel);
+      const newRadius = Math.max(10, 30 - zoomLevel);
+      const newBlur = Math.max(5, 20 - zoomLevel);
       heatRef.current.setOptions({ radius: newRadius, blur: newBlur });
     }
 
@@ -43,7 +45,7 @@ const HeatmapLayer = ({ points }) => {
       map.off("zoomend", updateHeatLayer);
       map.removeLayer(heatRef.current);
     };
-  }, [map, points]);
+  }, [map, points]); // suggested practice
 
   return null;
 };
@@ -70,25 +72,16 @@ const GlobalHeatMapDeaths = () => {
     item.deaths,
   ]);
 
-  const gradient = {
-    0.0: "green",
-    0.25: "orange",
-    0.5: "pink",
-    1.0: "red",
-  };
-
   return (
     <div className="flex justify-center">
       <div className="w-9/12">
         <MapContainer
           center={[0, 0]}
           zoom={2}
-          style={{ height: "80vh", width: "100%" }}  // Ensure width is 100%
+          style={{ height: "80vh", width: "100%" }}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          {heatData.length > 0 && (
-            <HeatmapLayer points={heatData} gradient={gradient} />
-          )}
+          {heatData.length > 0 && <HeatmapLayer points={heatData} />}
         </MapContainer>
       </div>
     </div>

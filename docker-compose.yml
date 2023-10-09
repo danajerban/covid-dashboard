@@ -19,9 +19,8 @@ services:
     env_file:
       - .env
 
-
-  client:
-    build: ./client
-    ports:
-      - '3000:3000'
-    command: npm run start
+  # client:
+  #   build: ./client
+  #   ports:
+  #     - '3000:3000'
+  #   command: npm run start

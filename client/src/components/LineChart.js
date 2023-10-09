@@ -1,22 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import zoomPlugin from 'chartjs-plugin-zoom';
+import zoomPlugin from "chartjs-plugin-zoom";
 
 Chart.register(zoomPlugin);
 //sources: https://www.chartjs.org/docs/latest/charts/line.html & https://www.youtube.com/@ChartJS-tutorials
 
 function LineChart({ data }) {
-  //console.log(data);
   const dates = data.map((entry) => new Date(entry.date).toLocaleDateString());
   const confirmedCases = data.map((entry) => entry.confirmed);
   const deaths = data.map((entry) => entry.deaths);
   const recoveries = data.map((entry) => entry.recovered);
 
-  //for range selectors we have to filter the dates
-  //they come from the database in this format 22/01/2020
-  //we have to convert them in milliseconds time so we can filter them later from the user input (date picker format is yyyy-mm-dd)
+  // for range selectors we have to filter the dates - they come from the database in this format 22/01/2020
+  // we have to convert them in milliseconds time so we can filter them later from the user input (date picker format is yyyy-mm-dd)
   // also document.getElementById("endDate").value; returns a string in the format yyyy-mm-dd
-  // so we have to convert it to milliseconds time as well: new Date(document.getElementById("startDate").value).getTime(); to compare ms with ms
+  // so we have to convert it to milliseconds time as well: new Date(document.getElementById("startDate").value).getTime();
+  // in order to compare milliseconds with milliseconds time
 
   function convertDatesFromDB(dates) {
     return dates.map((date) => {
@@ -84,15 +83,15 @@ function LineChart({ data }) {
                 enabled: true,
               },
               pinch: {
-                enabled: true
+                enabled: true,
               },
-              mode: 'xy',
+              mode: "xy",
             },
             pan: {
               enabled: true,
-              mode: 'xy',
+              mode: "xy",
             },
-          }
+          },
         },
       },
     });
@@ -102,7 +101,6 @@ function LineChart({ data }) {
       }
     };
   }, []);
-  //console.log({dates})
 
   const chartData = {
     labels: dates,
@@ -151,13 +149,19 @@ function LineChart({ data }) {
   }
 
   function filterDates() {
-    //we use setHours(0, 0, 0, 0) to skip the time part for all cases because we will work with milliseconds time
+    // due to trouble with this part of the code, I based my logic around this video:
+    // https://www.youtube.com/watch?v=vmp3czGfw2U and the documentation of chart.js
+    // Initially I wanted to filter in the back-end as well but I could see there was no point on
+    // doing so, filtering in front-end worked just fine
+
+    chartInstance.current.resetZoom();
+    //we use setHours(0, 0, 0, 0) to skip the time part for all cases because we will work with milliseconds time (which includes the time)
     const startDate1 = new Date(document.getElementById("startDate").value);
     const startDate = startDate1.setHours(0, 0, 0, 0);
-    // console.log(startDate)
+
     const endDate1 = new Date(document.getElementById("endDate").value);
     const endDate = endDate1.setHours(0, 0, 0, 0);
-    //console.log(endDate)
+
     const filterDates = convertedDatesFromDatabase.filter(
       (date) => date >= startDate && date <= endDate
     );
@@ -177,7 +181,7 @@ function LineChart({ data }) {
       startArrayIndex,
       endArrayIndex + 1
     );
-    //update the chart
+    // update the chart with the filtered data
     chartData.labels = convertMsToDateDBFormat(filterDates);
     chartData.datasets[0].data = filteredDeaths;
     chartData.datasets[1].data = filteredRecoveries;
@@ -190,29 +194,60 @@ function LineChart({ data }) {
     chartData.datasets[0].data = deaths;
     chartData.datasets[1].data = recoveries;
     chartData.datasets[2].data = confirmedCases;
+    chartInstance.current.resetZoom();
     chartInstance.current.update();
   }
 
   return (
     <div className="flex w-11/12 mx-auto bg-gray-100 rounded-lg items-center">
-        <div className="flex-grow relative" style={{ height: "70vh" }}>
-            <canvas ref={chartRef}></canvas>
+      <div className="flex-grow relative" style={{ height: "70vh" }}>
+        <canvas ref={chartRef}></canvas>
+      </div>
+      <div
+        className="flex flex-col items-center space-y-4 ml-1"
+        style={{ minWidth: "150px", alignSelf: "center" }}
+      >
+        <div className="w-full text-pink-600 text-center flex flex-col space-y-1">
+          Start Date:
+          <input
+            type="date"
+            id="startDate"
+            min="2020-01-22"
+            max="2020-07-26"
+            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-400"
+          />
+          End Date:
+          <input
+            type="date"
+            id="endDate"
+            min="2020-01-23"
+            max="2020-07-27"
+            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-400"
+          />
         </div>
-        <div className="flex flex-col items-center space-y-4 ml-1" style={{ minWidth: "150px", alignSelf: 'center' }}>
-            <div className="w-full flex flex-col space-y-1">
-                Start Date:
-                <input type="date" id="startDate" min="2020-01-22" max="2020-07-26" className="bg-pink-300 text-white rounded-lg p-2 w-full" />
-                End Date:
-                <input type="date" id="endDate" min="2020-01-23" max="2020-07-27" className="bg-pink-300 text-white rounded-lg p-2 w-full" />
-            </div>
-            <div className="w-full flex flex-col space-y-1 mt-4">
-                <button onClick={filterDates} className="bg-green-300 text-black rounded-lg p-2 w-full">Filter</button>
-                <button onClick={resetDates} className="bg-pink-800 text-white rounded-lg p-2 w-full">Reset</button>
-            </div>
-            <div className="w-full mt-4">
-                <button onClick={resetZoom} className="bg-orange-300 text-black rounded-lg p-2 w-full">Reset Zoom</button>
-            </div>
+        <div className="w-full flex flex-col space-y-1 mt-4">
+          <button
+            onClick={filterDates}
+            className="bg-pink-400 text-white rounded-lg p-2 w-full hover:bg-pink-600"
+          >
+            Filter
+          </button>
+          <button
+            onClick={resetDates}
+            className="bg-pink-400 text-white rounded-lg p-2 w-full hover:bg-pink-600"
+          >
+            Reset
+          </button>
         </div>
+        <div className="w-full mt-4">
+          <button
+            onClick={resetZoom}
+            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-600"
+          >
+            Reset Zoom
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -2,14 +2,12 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
 function PieChart({ totalData }) {
-  //console.log(totalData);
+  // basically same logic as line chart, implemented for a nice UI/UX
+  // same canvas error so used useRef again
+  
   const totalConfirmedCases = totalData.confirmed;
   const totalDeaths = totalData.deaths;
   const totalRecoveries = totalData.recovered;
-
-  // used useRef due to the error:
-  // "Canvas is already in use. Chart with ID '1' must be destroyed before the canvas with ID '1' can be reused."
-  // source: https://www.youtube.com/watch?v=p3aEoyfhZ8o
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -44,10 +42,12 @@ function PieChart({ totalData }) {
   };
 
   return (
-    <div className="flex justify-center items-center" style={{ width: "700px", height: "500px" }}>
+    <div
+      className="flex justify-center items-center"
+      style={{ width: "700px", height: "500px" }}
+    >
       <canvas ref={chartRef}></canvas>
     </div>
-
   );
 }
 

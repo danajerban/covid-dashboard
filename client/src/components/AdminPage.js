@@ -15,17 +15,13 @@ function AdminPage() {
   });
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
-
   const handleSearch = async () => {
     try {
       const response = await axios.get(
         `http://localhost:5000/admin/search?q=${query}`
       );
       setCountries(response.data);
+      setSelectedCountry(null); // Reset selectedCountry on new search
     } catch (error) {
       console.error("Error searching countries:", error);
     }
@@ -62,73 +58,122 @@ function AdminPage() {
     setSelectedCountry(country);
   };
 
-  const handleGoToHomepage = () => {
-    navigate("/");
+  const closeForm = () => {
+    setSelectedCountry(null);
   };
 
   return (
-    <div className="p-4">
-      <button onClick={handleGoToHomepage}>Go to Homepage</button>
-      <button onClick={handleLogout}>Logout</button>
-      <input
-        type="text"
-        placeholder="Search countries"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
-      {/* search results */}
-      {countries.map((country) => (
-        <div key={country.id}>
-          <h2>{country.name}</h2>
-          <button onClick={() => handleEdit(country)}>Edit OR </button>
-          <button onClick={() => handleDelete(country.id)}>Delete</button>
+    <div className="flex flex-col items-center p-4 min-h-screen bg-gray-100">
+      <div className="flex w-full max-w-lg">
+        <input
+          type="text"
+          placeholder="Search countries"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full rounded-l-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-pink-600 text-white rounded-r-md px-4 py-2"
+        >
+          Search
+        </button>
+      </div>
+      {/* search results - only render if selectedCountry is null*/}
+      {!selectedCountry && (
+        <div
+          className="mt-4 w-full max-w-lg overflow-y-auto"
+          style={{ maxHeight: "300px" }}
+        >
+          {countries.map((country) => (
+            <div
+              key={country.id}
+              className="flex justify-between items-center mb-2 bg-white p-2 rounded-md"
+            >
+              <h2 className="text-pink-600">{country.name}</h2>
+              <div>
+                <button
+                  onClick={() => handleEdit(country)}
+                  className="bg-pink-600 text-white rounded-md px-4 py-1 mr-2"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(country.id)}
+                  className="bg-pink-300 text-white rounded-md px-4 py-1"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-      {/* edit form */}
+      )}
+      {/* edit form - if there is a selected country to edit*/}
       {selectedCountry && (
-        <div className="edit-form">
-          <h2>Edit Data for {selectedCountry.name}</h2>
-          <input
-            type="date"
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-          />
-          <input
-            type="number"
-            placeholder="Confirmed"
-            value={formData.confirmed}
-            onChange={(e) =>
-              setFormData({ ...formData, confirmed: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Deaths"
-            value={formData.deaths}
-            onChange={(e) =>
-              setFormData({ ...formData, deaths: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Recovered"
-            value={formData.recovered}
-            onChange={(e) =>
-              setFormData({ ...formData, recovered: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Active"
-            value={formData.active}
-            onChange={(e) =>
-              setFormData({ ...formData, active: e.target.value })
-            }
-          />
-          <button onClick={() => handleUpdate(selectedCountry.id)}>
-            Update Data
+        <div className="edit-form mt-4 w-full max-w-lg bg-white p-4 rounded-md relative">
+          <button
+            onClick={closeForm}
+            className="text-pink-400 rounded-full p-1 absolute top-2 right-2 hover:text-pink-700"
+          >
+            X
           </button>
+
+          <h2 className="text-center text-pink-600 mb-4">
+            Edit Data for {selectedCountry.name}
+          </h2>
+          <div className="space-y-2">
+            <input
+              type="date"
+              value={formData.date}
+              onChange={(e) =>
+                setFormData({ ...formData, date: e.target.value })
+              }
+              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+            />{" "}
+            <input
+              type="number"
+              placeholder="Confirmed"
+              value={formData.confirmed}
+              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={(e) =>
+                setFormData({ ...formData, confirmed: e.target.value })
+              }
+            />
+            <input
+              type="number"
+              placeholder="Deaths"
+              value={formData.deaths}
+              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={(e) =>
+                setFormData({ ...formData, deaths: e.target.value })
+              }
+            />
+            <input
+              type="number"
+              placeholder="Recovered"
+              value={formData.recovered}
+              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={(e) =>
+                setFormData({ ...formData, recovered: e.target.value })
+              }
+            />
+            <input
+              type="number"
+              placeholder="Active"
+              value={formData.active}
+              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={(e) =>
+                setFormData({ ...formData, active: e.target.value })
+              }
+            />
+            <button
+              onClick={() => handleUpdate(selectedCountry.id)}
+              className="mt-4 bg-pink-600 text-white w-full py-2 rounded-md"
+            >
+              Update Data
+            </button>
+          </div>
         </div>
       )}
     </div>

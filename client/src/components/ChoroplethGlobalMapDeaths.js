@@ -5,30 +5,30 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import geojsonData from "../countries.geo.json";
 
-//sources: https://leafletjs.com/examples/choropleth/ && https://github.com/johan/world.geo.json for GeoJSON data
-// and Chat gpt for legend of the table and the math for the color intensity
+// sources: https://leafletjs.com/examples/choropleth/ && https://github.com/johan/world.geo.json for GeoJSON data
+// and Chat gpt for legend of the table and the math behind the color intensities
 
 const getColor = (d, maxDeaths) => {
   const intensity = Math.log(d + 1) / Math.log(maxDeaths + 1);
   return intensity > 0.9
-      ? "#8b0000"
-      : intensity > 0.8
-      ? "#b22222"
-      : intensity > 0.7
-      ? "#dc143c"
-      : intensity > 0.6
-      ? "#ff4500"
-      : intensity > 0.5
-      ? "#ff6347"
-      : intensity > 0.4
-      ? "#ff7f50"
-      : intensity > 0.3
-      ? "#ffa07a"
-      : intensity > 0.2
-      ? "#ffb6c1"
-      : intensity > 0.1
-      ? "#ffc0cb"
-      : "#ffd1dc";
+    ? "#8b0000"
+    : intensity > 0.8
+    ? "#b22222"
+    : intensity > 0.7
+    ? "#dc143c"
+    : intensity > 0.6
+    ? "#ff4500"
+    : intensity > 0.5
+    ? "#ff6347"
+    : intensity > 0.4
+    ? "#ff7f50"
+    : intensity > 0.3
+    ? "#ffa07a"
+    : intensity > 0.2
+    ? "#ffb6c1"
+    : intensity > 0.1
+    ? "#ffc0cb"
+    : "#ffd1dc";
 };
 
 const countryStyle = (feature, maxDeaths) => {
@@ -71,20 +71,18 @@ const Legend = ({ maxDeaths }) => {
 
     legend.onAdd = function () {
       const div = L.DomUtil.create("div", "info legend");
-      const grades = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+      const grades = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       let labels = [];
 
       for (let i = 0; i < grades.length; i++) {
-        const from = Math.round(grades[i] * maxDeaths);
-        const to = grades[i + 1]
-          ? Math.round(grades[i + 1] * maxDeaths)
-          : maxDeaths;
+        const from = grades[i] * 10000;
+        const to = grades[i + 1] ? grades[i + 1] * 10000 : null;
         labels.push(
           '<div style="background-color:' +
             getColor(from + 1) +
             '; width: 24px; height: 24px; float: left; opacity: 0.7; margin-right: 5px;"></div> ' +
-            from +
-            (to ? "&ndash;" + to + "<br>" : "+")
+            from.toLocaleString() +
+            (to ? "&ndash;" + to.toLocaleString() + "<br>" : " +")
         );
       }
 
@@ -131,9 +129,7 @@ const ChoroplethGlobalMapDeaths = () => {
           const countryData = data.find(
             (item) => item.country === feature.properties.name
           );
-          feature.properties.deaths = countryData
-            ? countryData.deaths
-            : 0;
+          feature.properties.deaths = countryData ? countryData.deaths : 0;
           return feature;
         }
       );
