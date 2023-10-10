@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
-
+import {toast} from 'react-toastify'
 function Layout({ children, isLoggedIn, onLoginStatusChange }) {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -13,7 +13,17 @@ function Layout({ children, isLoggedIn, onLoginStatusChange }) {
 
   const logout = () => {
     localStorage.removeItem('token');
-    onLoginStatusChange(false);  
+    onLoginStatusChange(false);
+    toast.info('Logged out!', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
   };
 
 

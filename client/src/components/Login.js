@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify'
 
 function Login({onLoginStatusChange}) {
   const navigate = useNavigate();
@@ -23,8 +24,28 @@ function Login({onLoginStatusChange}) {
       });
       localStorage.setItem("token", response.data.token);
       onLoginStatusChange(true);
+      toast.success('Logged in successfully!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       navigate("/");
     } catch (error) {
+      toast.error('Bad credentials, try again!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       console.error("Login error:", error);
     }
   };

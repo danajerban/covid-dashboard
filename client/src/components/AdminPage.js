@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import {toast} from 'react-toastify'
 function AdminPage() {
   const [query, setQuery] = useState("");
   const [countries, setCountries] = useState([]);
@@ -36,10 +36,28 @@ function AdminPage() {
           withCredentials: true,
         }
       );
-      alert("Data updated successfully");
+      toast.success('Data updated successfully!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     } catch (error) {
       console.error("Error updating data:", error);
-      alert("Error updating data");
+      toast.error('Cannot update data!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
@@ -47,10 +65,28 @@ function AdminPage() {
     try {
       await axios.delete(`http://localhost:5000/admin/delete/${countryId}`);
       setCountries(countries.filter((country) => country.id !== countryId));
-      alert("Country deleted successfully");
+      toast.success('Country deleted successfully!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     } catch (error) {
       console.error("Error deleting country:", error);
-      alert("Error deleting country");
+      toast.error('Cannot delete country!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 

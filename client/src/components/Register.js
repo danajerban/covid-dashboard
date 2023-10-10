@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from 'react-toastify'
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -14,8 +14,28 @@ function Register() {
         username,
         password,
       });
+      toast.success('Registered successfully, please log in!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       navigate("/login");
     } catch (error) {
+      toast.error('User cannot register as new admin!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       console.error("Register error:", error);
     }
   };

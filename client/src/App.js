@@ -7,12 +7,13 @@ import CountryPage from "./components/CountryPage";
 import Layout from "./components/Layout";
 import { useState, useEffect } from "react";
 import AuthControl from "./components/AuthControl";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, []);
 
@@ -22,10 +23,13 @@ function App() {
   return (
     <>
       <Router>
-      <Layout isLoggedIn={isLoggedIn} onLoginStatusChange={handleLoginStatus}>
+        <Layout isLoggedIn={isLoggedIn} onLoginStatusChange={handleLoginStatus}>
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/login" element={<Login onLoginStatusChange={handleLoginStatus} />} />
+            <Route
+              path="/login"
+              element={<Login onLoginStatusChange={handleLoginStatus} />}
+            />
             <Route path="/register" element={<Register />} />
             <Route
               path="/admin"
@@ -39,6 +43,18 @@ function App() {
           </Routes>
         </Layout>
       </Router>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }
