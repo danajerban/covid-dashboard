@@ -10,7 +10,7 @@ function SearchBar() {
     e.preventDefault();
     try {
       const response = await axios.get(
-        `http://localhost:5000/search?q=${query}`
+        `${process.env.REACT_APP_BACKEND_URL}/search?q=${query}`
       );
       const firstCountry = response.data[0];
       if (firstCountry) {

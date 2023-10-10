@@ -18,7 +18,7 @@ function AdminPage() {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/admin/search?q=${query}`
+        `${process.env.REACT_APP_BACKEND_URL}/admin/search?q=${query}`
       );
       setCountries(response.data);
       setSelectedCountry(null); // Reset selectedCountry on new search
@@ -30,7 +30,7 @@ function AdminPage() {
   const handleUpdate = async (countryId) => {
     try {
       await axios.post(
-        `http://localhost:5000/admin/update/${countryId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/admin/update/${countryId}`,
         formData,
         {
           withCredentials: true,
@@ -63,7 +63,7 @@ function AdminPage() {
 
   const handleDelete = async (countryId) => {
     try {
-      await axios.delete(`http://localhost:5000/admin/delete/${countryId}`);
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/admin/delete/${countryId}`);
       setCountries(countries.filter((country) => country.id !== countryId));
       toast.success('Country deleted successfully!', {
         position: "top-center",

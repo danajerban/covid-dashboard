@@ -13,7 +13,7 @@ function CountryPage() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/search/${countryId}`
+          `${process.env.REACT_APP_BACKEND_URL}/search/${countryId}`
         );
         setData(response.data);
 
@@ -30,7 +30,7 @@ function CountryPage() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/search/totals/${countryId}`
+          `${process.env.REACT_APP_BACKEND_URL}/search/totals/${countryId}`
         );
         setTotalData(response.data);
         //console.log("Country data:", response.data);

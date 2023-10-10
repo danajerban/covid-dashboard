@@ -107,7 +107,7 @@ const ChoroplethGlobalMapDeaths = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/total-cases");
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/total-cases`);
         setData(response.data);
         const maxDeathsValue = response.data.reduce(
           (max, item) => Math.max(max, item.deaths),
