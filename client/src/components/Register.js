@@ -24,12 +24,12 @@ function Register() {
     <div className="p-4 justify-center items-center flex flex-1">
       <form
         onSubmit={handleRegister}
-        className="flex flex-col border-2 border-pink-300 rounded-xl p-4 gap-4"
+        className="flex flex-col border-2 border-gray-300 rounded-xl p-4 gap-4"
       >
         <div>
           <label
             htmlFor="username"
-            className="block text-sm font-medium leading-6 text-pink-600"
+            className="block text-sm font-medium text-center leading-6 text-gray-800"
           >
             Username
           </label>
@@ -40,14 +40,14 @@ function Register() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="block w-full rounded-md border-pink-300 border py-1.5 text-pink-600 focus:outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-gray-300 border p-1.5 text-gray-800 focus:outline-none placeholder:text-gray-400 focus:ring-1 focus:ring-gray-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium leading-6 text-pink-600"
+            className="block text-sm font-medium text-center leading-6 text-gray-800"
           >
             Password
           </label>
@@ -58,13 +58,13 @@ function Register() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full rounded-md border-pink-300 border py-1.5 text-pink-600 focus:outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-gray-300 border p-1.5 text-gray-800 focus:outline-none placeholder:text-gray-400 focus:ring-1 focus:ring-gray-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
         <button
           type="submit"
-          className="mt-5 flex w-full justify-center rounded-md bg-pink-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-500 focus:outline-none"
+          className="mt-5 flex w-full justify-center rounded-md bg-pink-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-400 focus:outline-none"
         >
           Register
         </button>

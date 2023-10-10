@@ -67,14 +67,14 @@ function AdminPage() {
       <div className="flex w-full max-w-lg">
         <input
           type="text"
-          placeholder="Search countries"
+          placeholder="Search countries for editing"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full rounded-l-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
         />
         <button
           onClick={handleSearch}
-          className="bg-pink-600 text-white rounded-r-md px-4 py-2"
+          className="bg-pink-500 text-white rounded-r-md px-4 py-2 hover:bg-pink-400"
         >
           Search
         </button>
@@ -94,13 +94,13 @@ function AdminPage() {
               <div>
                 <button
                   onClick={() => handleEdit(country)}
-                  className="bg-pink-600 text-white rounded-md px-4 py-1 mr-2"
+                  className="bg-pink-500 text-white rounded-md px-4 py-1 mr-2 hover:bg-pink-400"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(country.id)}
-                  className="bg-pink-300 text-white rounded-md px-4 py-1"
+                  className="bg-pink-300 text-white rounded-md px-4 py-1 hover:bg-pink-500"
                 >
                   Delete
                 </button>
@@ -114,62 +114,70 @@ function AdminPage() {
         <div className="edit-form mt-4 w-full max-w-lg bg-white p-4 rounded-md relative">
           <button
             onClick={closeForm}
-            className="text-pink-400 rounded-full p-1 absolute top-2 right-2 hover:text-pink-700"
+            className="text-pink-500 rounded-full p-1 absolute top-2 right-2 hover:text-pink-900"
           >
             X
           </button>
 
-          <h2 className="text-center text-pink-600 mb-4">
+          <h2 className="text-center text-gray-700 mb-4">
             Edit Data for {selectedCountry.name}
           </h2>
           <div className="space-y-2">
+            {/* even though I could place a min/max for the calendar, I decided to
+            leave it open for future use - used the dataset mentioned earlier */}
             <input
               type="date"
+              required
               value={formData.date}
               onChange={(e) =>
                 setFormData({ ...formData, date: e.target.value })
               }
-              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full rounded-md border-0 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-gray-600"
             />{" "}
             <input
               type="number"
-              placeholder="Confirmed"
+              required
+              placeholder="Total confirmed"
               value={formData.confirmed}
-              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full rounded-md border-0 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-gray-600"
               onChange={(e) =>
                 setFormData({ ...formData, confirmed: e.target.value })
               }
             />
             <input
               type="number"
-              placeholder="Deaths"
+              required
+              placeholder="Total Deaths"
               value={formData.deaths}
-              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full rounded-md border-0 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-gray-600"
               onChange={(e) =>
                 setFormData({ ...formData, deaths: e.target.value })
               }
             />
             <input
               type="number"
-              placeholder="Recovered"
+              required
+              placeholder="Total Recovered"
               value={formData.recovered}
-              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full rounded-md border-0 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-gray-600"
               onChange={(e) =>
                 setFormData({ ...formData, recovered: e.target.value })
               }
             />
+            {/* even though active cases aren't being displayed, you can still edit them for future use maybe */}
             <input
               type="number"
-              placeholder="Active"
+              required
+              placeholder="Total Active"
               value={formData.active}
-              className="w-full rounded-md border-0 py-2 px-4 text-pink-600 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full rounded-md border-0 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-gray-600"
               onChange={(e) =>
                 setFormData({ ...formData, active: e.target.value })
               }
             />
             <button
               onClick={() => handleUpdate(selectedCountry.id)}
-              className="mt-4 bg-pink-600 text-white w-full py-2 rounded-md"
+              className="mt-4 bg-pink-500 text-white w-full py-2 rounded-md hover:bg-pink-400"
             >
               Update Data
             </button>

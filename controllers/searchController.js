@@ -7,12 +7,12 @@ async function searchCountry(req, res) {
     const countries = await prisma.country.findMany({
       where: {
         name: {
-          contains: query,
+          startsWith: query,
           mode: "insensitive",
         },
       },
     });
-    res.json(countries);
+    res.json(countries, );
   } catch (error) {
     console.error("Error searching country:", error);
     res.status(500).send("Internal server error");
@@ -27,7 +27,10 @@ async function getCountryData(req, res) {
         countryId: countryId,
       },
       orderBy: {
-        date: 'asc',  //order by date ascending for charts
+        date: 'asc',  //order by date ascending for charts - get total
+      },
+      include: {
+        country: true,  // include the related country data
       },
     });
     res.json(covidData);
@@ -46,6 +49,9 @@ async function getCountryTotalCases(req, res) {
       },
       orderBy: {
         date: 'desc',
+      },
+      include: {
+        country: true,  
       },
     });
     res.json(covidData);

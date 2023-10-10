@@ -4,7 +4,7 @@ import Chart from "chart.js/auto";
 function PieChart({ totalData }) {
   // basically same logic as line chart, implemented for a nice UI/UX
   // same canvas error so used useRef again
-  
+
   const totalConfirmedCases = totalData.confirmed;
   const totalDeaths = totalData.deaths;
   const totalRecoveries = totalData.recovered;
@@ -25,7 +25,7 @@ function PieChart({ totalData }) {
         chartInstance.current.destroy();
       }
     };
-  }, []);
+  }, [totalData]);
 
   const chartData = {
     labels: ["Confirmed Cases", "Deaths", "Recoveries"],

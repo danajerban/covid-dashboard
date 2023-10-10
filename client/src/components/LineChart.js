@@ -100,7 +100,7 @@ function LineChart({ data }) {
         chartInstance.current.destroy();
       }
     };
-  }, []);
+  }, [data]);
 
   const chartData = {
     labels: dates,
@@ -207,14 +207,14 @@ function LineChart({ data }) {
         className="flex flex-col items-center space-y-4 ml-1"
         style={{ minWidth: "150px", alignSelf: "center" }}
       >
-        <div className="w-full text-pink-600 text-center flex flex-col space-y-1">
+        <div className="w-full text-gray-700 text-center flex flex-col space-y-1">
           Start Date:
           <input
             type="date"
             id="startDate"
             min="2020-01-22"
             max="2020-07-26"
-            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-400"
+            className=" text-gray-700 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-1 focus:ring-gray-600"
           />
           End Date:
           <input
@@ -222,7 +222,7 @@ function LineChart({ data }) {
             id="endDate"
             min="2020-01-23"
             max="2020-07-27"
-            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-400"
+            className=" text-gray-700 border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-1 focus:ring-gray-600"
           />
         </div>
         <div className="w-full flex flex-col space-y-1 mt-4">
@@ -236,13 +236,13 @@ function LineChart({ data }) {
             onClick={resetDates}
             className="bg-pink-400 text-white rounded-lg p-2 w-full hover:bg-pink-600"
           >
-            Reset
+            Reset Filter
           </button>
         </div>
         <div className="w-full mt-4">
           <button
             onClick={resetZoom}
-            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-600"
+            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-500"
           >
             Reset Zoom
           </button>

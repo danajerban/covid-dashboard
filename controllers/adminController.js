@@ -7,7 +7,7 @@ async function searchCountries(req, res) {
     const countries = await prisma.country.findMany({
       where: {
         name: {
-          contains: query,
+          startsWith: query,
           mode: "insensitive",
         },
       },
