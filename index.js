@@ -8,7 +8,7 @@ const app = express();
 const PORT = 5000;
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: `https://covid-dashboard-front-end.onrender.com`,
   credentials: true,
 };
 
