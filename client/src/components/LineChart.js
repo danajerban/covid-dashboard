@@ -3,7 +3,8 @@ import Chart from "chart.js/auto";
 import zoomPlugin from "chartjs-plugin-zoom";
 
 Chart.register(zoomPlugin);
-//sources: https://www.chartjs.org/docs/latest/charts/line.html & https://www.youtube.com/@ChartJS-tutorials
+// the docs were really nice for chart.js and also the youtube channel of chart.js for filtering part
+// sources: https://www.chartjs.org/docs/latest/charts/line.html & https://www.youtube.com/@ChartJS-tutorials
 
 function LineChart({ data }) {
   const dates = data.map((entry) => new Date(entry.date).toLocaleDateString());
@@ -37,8 +38,7 @@ function LineChart({ data }) {
   }
 
   const convertedDatesFromDatabase = convertDatesFromDB(dates);
-
-  // used useRef due to the error:
+  // this was the only major error for this component, I had to use useRef to fix this error:
   // "Canvas is already in use. Chart with ID '1' must be destroyed before the canvas with ID '1' can be reused."
   // source: https://www.youtube.com/watch?v=p3aEoyfhZ8o
 
@@ -49,6 +49,7 @@ function LineChart({ data }) {
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
+    // just nice transitions from the docs
     const myChartRef = chartRef.current.getContext("2d");
     chartInstance.current = new Chart(myChartRef, {
       type: "line",
@@ -153,6 +154,7 @@ function LineChart({ data }) {
     // https://www.youtube.com/watch?v=vmp3czGfw2U and the documentation of chart.js
     // Initially I wanted to filter in the back-end as well but I could see there was no point on
     // doing so, filtering in front-end worked just fine
+    // I could write this code better but sticked to this logic because 1 it works, 2 is pretty understandable
 
     chartInstance.current.resetZoom();
     //we use setHours(0, 0, 0, 0) to skip the time part for all cases because we will work with milliseconds time (which includes the time)

@@ -5,6 +5,9 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat/dist/leaflet-heat.js";
 
+// sources: https://www.patrick-wied.at/static/heatmapjs/plugin-leaflet-layer.html and https://github.com/Leaflet/Leaflet.heat
+// and chat GPT for the logic of zooming in/out and changing the radius and blur of the heatmap
+
 const HeatmapLayer = ({ points }) => {
   const map = useMap();
   const heatRef = useRef(null);
@@ -21,7 +24,7 @@ const HeatmapLayer = ({ points }) => {
     };
 
     const maxCases = Math.max(...points.map((point) => point[2]));
-    
+
 
     heatRef.current = L.heatLayer(points, {
       radius: 20,
@@ -64,7 +67,10 @@ const GlobalHeatMapCases = () => {
 
     fetchData();
   }, []);
-
+// this is a relative map, so after mapping the data from the back-end
+  // the process was simple, just map the data to the heatmap
+  // and when zooming in/out, the heatmap will change the radius and blur for a better user experience
+  // remember this is a RELATIVE traditional heatmap - showing the intensity of deaths worldwide - not a choropleth map that is based on the countries
   const heatData = data.map((item) => [
     item.latitude,
     item.longitude,

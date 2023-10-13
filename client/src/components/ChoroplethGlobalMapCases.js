@@ -6,7 +6,8 @@ import "leaflet/dist/leaflet.css";
 import geojsonData from "../countries.geo.json";
 
 // sources: https://leafletjs.com/examples/choropleth/ && https://github.com/johan/world.geo.json for GeoJSON data
-// and Chat gpt for legend of the table and the math behind the color intensities
+// and Chat GPT for the legend of the table and the math behind the color intensities
+// basically the intensity varies from 0 - 1.0 and the color is based on the intensity
 
 const getColor = (d, maxConfirmed) => {
   const intensity = Math.log(d + 1) / Math.log(maxConfirmed + 1);
@@ -73,7 +74,7 @@ const Legend = ({ maxConfirmed }) => {
       const div = L.DomUtil.create("div", "info legend");
       const grades = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       let labels = [];
-
+      // create the div for the legend with the colors and the labels formatted to the closest 250000
       for (let i = 0; i < grades.length; i++) {
         const from = grades[i] * 250000;
         const to = grades[i + 1] ? grades[i + 1] * 250000 : null;
@@ -104,10 +105,17 @@ const ChoroplethGlobalMapCases = () => {
   const [geoJsonData, setGeoJsonData] = useState(null);
   const [maxConfirmed, setMaxConfirmed] = useState(0);
 
+// basically what is happening here is: get the total confirmed cases data for each country from the latest date
+// (remember how the backend is set up - sorting by date in descending order and then getting the first element)
+// from the back-end and then use the geojson data to map the data to the countries (check countries.geo.json file)
+// and then use the color intensities to color the countries based on the number of cases
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LOCAL_URL}/total-cases`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_LOCAL_URL}/total-cases`
+        );
         setData(response.data);
         const maxConfirmedValue = response.data.reduce(
           (max, item) => Math.max(max, item.confirmed),

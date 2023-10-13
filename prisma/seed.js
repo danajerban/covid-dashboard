@@ -4,8 +4,8 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-//map lat and long, populate countries table (lat, long, name, iso codes) and populate covid data table from csv files found at:
-//https://www.kaggle.com/datasets/imdevskp/corona-virus-report & https://www.kaggle.com/datasets/andradaolteanu/iso-country-codes-global
+// map lat and long, populate countries table (lat, long, name, iso codes) and populate covid data table from csv files found at:
+// https://www.kaggle.com/datasets/imdevskp/corona-virus-report & https://www.kaggle.com/datasets/andradaolteanu/iso-country-codes-global
 
 async function populateCountries() {
   const countryCoords = {};

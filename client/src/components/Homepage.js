@@ -8,6 +8,10 @@ function Homepage() {
   const [view, setView] = useState("Cases");
   const [mapType, setMapType] = useState("Choropleth");
 
+  // this code is just for handling the homepage view and map type
+  // it has 2 toggles, 1 for cases/deaths and 1 for choropleth/heatmap
+  // and renders the map based on the user's choice
+  // the code is pretty self-explanatory, so I won't go into details
   return (
     <div className="p-4 bg-gray-100">
       <div className="flex justify-end space-x-4 mt-4 mb-4">

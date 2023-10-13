@@ -4,7 +4,7 @@
 
 This project is a data dashboard to visualize COVID-19 statistics from different countries all around the world based on a dataset with range dates from 22 Jan, 2020 until 27, Aug 2020. The dashboard will exhibit metrics such as total cases, deaths, recoveries, and daily trends in an interactive and visually appealing manner. Through this project, a blend of data analysis, data manipulation, and interactive visualization is used, including charts and global maps.
 
-## Entities
+### Entities
 
 - **Country**: Holds details about different countries, like country names and ISO codes.
 - **COVID-19 Data**: Maintains time-series data of COVID-19 statistics for each country, encompassing the date, total cases, total deaths, total recoveries, and active cases.
@@ -26,7 +26,7 @@ This project is a data dashboard to visualize COVID-19 statistics from different
 
 ## Running this app
 
-# For local run:
+### For local run:
 
 1. Clone the repository: `git clone https://github.com/your-repo.git`
 2. Navigate to the project directory: `cd covid19-dashboard`
@@ -43,12 +43,12 @@ This project is a data dashboard to visualize COVID-19 statistics from different
 6. Open a new terminal and go to client folder: `cd client`
 7. Run Front-End: `npm run start`
 
-# For Docker run:
+### For Docker run:
 
 1. Open Docker Desktop app
 2. Run the containers: `docker compose build && docker compose up -d`
 
-# OTHER:
+### OTHER:
 
 1. To explore the database: `npx prisma studio`
 2. For testing the back-end: `npm run test`

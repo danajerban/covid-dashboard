@@ -5,8 +5,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat/dist/leaflet-heat.js";
 
-// sources: https://www.patrick-wied.at/static/heatmapjs/plugin-leaflet-layer.html
-// and Chat gpt for the math behind
+// sources: https://www.patrick-wied.at/static/heatmapjs/plugin-leaflet-layer.html and https://github.com/Leaflet/Leaflet.heat
+// and chat GPT for the logic of zooming in/out and changing the radius and blur of the heatmap
 
 const HeatmapLayer = ({ points }) => {
   const map = useMap();
@@ -56,7 +56,9 @@ const GlobalHeatMapDeaths = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LOCAL_URL}/total-cases`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_LOCAL_URL}/total-cases`
+        );
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -65,7 +67,10 @@ const GlobalHeatMapDeaths = () => {
 
     fetchData();
   }, []);
-
+  // this is a relative map, so after mapping the data from the back-end
+  // the process was simple, just map the data to the heatmap
+  // and when zooming in/out, the heatmap will change the radius and blur for a better user experience
+  // remember this is a RELATIVE traditional heatmap - showing the intensity of deaths worldwide - not a choropleth map that is based on the countries
   const heatData = data.map((item) => [
     item.latitude,
     item.longitude,

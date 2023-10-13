@@ -9,6 +9,8 @@ function CountryPage() {
   const [data, setData] = useState(null);
   const [totalData, setTotalData] = useState(null);
 
+// for a better reference we are using the countryId from the url params
+// and then fetch the data from backend using that countryId (all covid data for line chart include dates, and just total numbers for pie chart)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,8 +18,7 @@ function CountryPage() {
           `${process.env.REACT_APP_BACKEND_LOCAL_URL}/search/${countryId}`
         );
         setData(response.data);
-
-        //console.log(response.data);
+        //console.log("Country data:", response.data);
       } catch (error) {
         console.error("Error fetching country data:", error);
       }

@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
 function PieChart({ totalData }) {
-  // basically same logic as line chart, implemented for a nice UI/UX
-  // same canvas error so used useRef again
+  // basically same logic as line chart, implemented for a nice UI/UX even though not a requirement for the project
+  // same canvas error so used useRef again (see LineChart.js for more details on this error/fix)
 
   const totalConfirmedCases = totalData.confirmed;
   const totalDeaths = totalData.deaths;

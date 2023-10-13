@@ -1,6 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+// main searchbar in the navbar logic
+
 async function searchCountry(req, res) {
   const query = req.query.q;
   try {
@@ -51,7 +53,7 @@ async function getCountryTotalCases(req, res) {
         date: 'desc',
       },
       include: {
-        country: true,  
+        country: true,
       },
     });
     res.json(covidData);

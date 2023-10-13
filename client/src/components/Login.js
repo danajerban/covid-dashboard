@@ -7,7 +7,8 @@ function Login({onLoginStatusChange}) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  // pretty straightforward, we are just taking care of the token that comes from local storage
+  // the auth routes are already set up in the backend so its pretty easy to handle the login
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {

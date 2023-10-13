@@ -5,7 +5,10 @@ import  {toast} from 'react-toastify'
 function SearchBar() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
-
+ // for making things easier I implemented this logic for the search bar
+ // 1 - it makes a request to the backend with the query that the user typed (country.name)
+ // 2 - if the country exists it will redirect to the country page with the id of the country
+ // 3 - countryPage with take this param and make a request to the backend to get the data of the country
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -16,7 +19,7 @@ function SearchBar() {
       if (firstCountry) {
         navigate(`/country/${firstCountry.id}`);
       } else {
-        toast.error('Country not found, please check for typos', {
+        toast.error('Country not found, please check for typos!', {
           position: "top-center",
           autoClose: 1000,
           hideProgressBar: false,

@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+//admin panel has a search bar to search for countries and then 2 methods for editing/deleting data
 async function searchCountries(req, res) {
   const query = req.query.q;
   try {
@@ -53,7 +54,12 @@ async function updateData(req, res) {
 
 async function deleteCountry(req, res) {
   const { countryId } = req.params;
+  // due to foreign key constraints, we need to delete the covid data first
+  // or we can include something like onDelete: Cascade in the prisma.schema but this is not recommended as I read
   try {
+    await prisma.covidData.deleteMany({
+      where: { countryId: countryId },
+    });
     const deleteCountry = await prisma.country.delete({
       where: { id: countryId },
     });
@@ -63,5 +69,6 @@ async function deleteCountry(req, res) {
     res.status(500).send("Internal server error");
   }
 }
+
 
 module.exports = { searchCountries, updateData, deleteCountry };

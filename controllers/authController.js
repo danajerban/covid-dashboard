@@ -12,7 +12,7 @@ async function login(req, res) {
       return res.status(404).send("Admin not found");
     }
 
-    // bcrypt error because the password is not hashed in the database - i entered it manually
+    // bcrypt error initally - because the password wasn't hashed in the database - i entered it manually
     // if (password !== admin.password) {
     //   return res.status(401).send("Invalid password");
     // }
@@ -35,7 +35,7 @@ async function login(req, res) {
 const register = async (req, res) => {
   const { username, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
-  //check for username and password if it exists and then if it does not exist then create a new user
+  //check for username if it exists and then if it does not exist then create a new user
   try {
     const existingAdmin = await prisma.admin.findUnique({
       where: { username },

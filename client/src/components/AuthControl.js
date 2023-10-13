@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 function AuthControl ({ children, isLoggedIn }) {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  // we will use isLoggedIn from the App.js so no need to check for token here
+  // const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (!isLoggedIn) {

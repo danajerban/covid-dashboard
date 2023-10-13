@@ -6,7 +6,8 @@ function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  // pretty straightforward - we are just making a post request to the backend to register a new user
+  // the auth routes are already set up in the backend so its pretty easy to handle this
   const handleRegister = async (e) => {
     e.preventDefault();
     try {

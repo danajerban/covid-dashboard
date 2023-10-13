@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
+
 function AdminPage() {
   const [query, setQuery] = useState("");
   const [countries, setCountries] = useState([]);
@@ -13,7 +13,9 @@ function AdminPage() {
     recovered: "",
     active: "",
   });
-  const navigate = useNavigate();
+
+  // this url is just for local/docker backend: http://localhost:5000
+  // for render backend we have to use: https://covid-19-dashboard-z9sc.onrender.com (the deployed backend web service url)
 
   const handleSearch = async () => {
     try {
@@ -36,7 +38,7 @@ function AdminPage() {
           withCredentials: true,
         }
       );
-      toast.success('Data updated successfully!', {
+      toast.success("Data updated successfully!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -45,10 +47,10 @@ function AdminPage() {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     } catch (error) {
       console.error("Error updating data:", error);
-      toast.error('Cannot update data!', {
+      toast.error("Cannot update data!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -57,15 +59,17 @@ function AdminPage() {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     }
   };
 
   const handleDelete = async (countryId) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_BACKEND_LOCAL_URL}/admin/delete/${countryId}`);
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_LOCAL_URL}/admin/delete/${countryId}`
+      );
       setCountries(countries.filter((country) => country.id !== countryId));
-      toast.success('Country deleted successfully!', {
+      toast.success("Country deleted successfully!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -74,10 +78,10 @@ function AdminPage() {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     } catch (error) {
       console.error("Error deleting country:", error);
-      toast.error('Cannot delete country!', {
+      toast.error("Cannot delete country!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -86,7 +90,7 @@ function AdminPage() {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     }
   };
 
@@ -160,7 +164,7 @@ function AdminPage() {
           </h2>
           <div className="space-y-2">
             {/* even though I could place a min/max for the calendar, I decided to
-            leave it open for future use - used the dataset mentioned earlier */}
+            leave it open for future use maybe? - remember the dataset mentioned earlier has a 6 month range for 2020 only */}
             <input
               type="date"
               required
@@ -200,7 +204,7 @@ function AdminPage() {
                 setFormData({ ...formData, recovered: e.target.value })
               }
             />
-            {/* even though active cases aren't being displayed, you can still edit them for future use maybe */}
+            {/* even though active cases aren't being displayed on the daily trends, you can still edit them for future use maybe? */}
             <input
               type="number"
               required

@@ -1,20 +1,23 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 function Layout({ children, isLoggedIn, onLoginStatusChange }) {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
+  // initially I checked for token in the layout component, but it's better to do it in the App.js
+  // because we need to pass the login status to the layout component and the authControl component
+  // so App.js is the parent for both
+  // basically this is the navbar component which stays on the screen all the time
+  // according to the login status we will show different links
 
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   // useEffect(() => {
   //   const token = localStorage.getItem('token');
   //   setIsLoggedIn(!!token);
   // }, []);
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     onLoginStatusChange(false);
-    toast.info('Logged out!', {
+    toast.info("Logged out!", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -23,9 +26,8 @@ function Layout({ children, isLoggedIn, onLoginStatusChange }) {
       draggable: true,
       progress: undefined,
       theme: "light",
-      });
+    });
   };
-
 
   return (
     <>
@@ -46,26 +48,32 @@ function Layout({ children, isLoggedIn, onLoginStatusChange }) {
           </div>
           <SearchBar />
           <div className="flex space-x-4 mr-4">
-        {isLoggedIn ? (
-          <>
-            <Link to="/admin" className="text-pink-600 hover:text-pink-900">
-              Admin Panel
-            </Link>
-            <span onClick={logout} className="cursor-pointer text-pink-600 hover:text-pink-900">
-              Logout
-            </span>
-          </>
-        ) : (
-          <>
-            <Link to="/login" className="text-pink-600 hover:text-pink-900">
-              Login
-            </Link>
-            <Link to="/register" className="text-pink-600 hover:text-pink-900">
-              Register
-            </Link>
-          </>
-        )}
-      </div>
+            {isLoggedIn ? (
+              <>
+                <Link to="/admin" className="text-pink-600 hover:text-pink-900">
+                  Admin Panel
+                </Link>
+                <span
+                  onClick={logout}
+                  className="cursor-pointer text-pink-600 hover:text-pink-900"
+                >
+                  Logout
+                </span>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="text-pink-600 hover:text-pink-900">
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-pink-600 hover:text-pink-900"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </nav>
       <main>{children}</main>
