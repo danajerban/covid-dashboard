@@ -23,9 +23,6 @@ async function updateData(req, res) {
   const { countryId } = req.params;
   const { date, confirmed, deaths, recovered, active } = req.body;
   try {
-    console.log("countryId:", countryId);
-    console.log("date:", date);
-    console.log("confirmed:", confirmed);
     const updatedData = await prisma.covidData.upsert({
       where: {
         id: countryId,

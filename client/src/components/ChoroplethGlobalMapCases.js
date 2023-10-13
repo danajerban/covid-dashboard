@@ -107,7 +107,7 @@ const ChoroplethGlobalMapCases = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/total-cases`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LOCAL_URL}/total-cases`);
         setData(response.data);
         const maxConfirmedValue = response.data.reduce(
           (max, item) => Math.max(max, item.confirmed),

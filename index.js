@@ -8,7 +8,7 @@ const app = express();
 const PORT = 5000;
 
 const corsOptions = {
-  origin: `https://covid-dashboard-front-end.onrender.com`,
+  origin: "http://localhost:3000",
   credentials: true,
 };
 
@@ -22,3 +22,5 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+module.exports = app;

@@ -21,7 +21,7 @@ const HeatmapLayer = ({ points }) => {
     };
 
     const maxCases = Math.max(...points.map((point) => point[2]));
-    console.log({ maxCases });
+    
 
     heatRef.current = L.heatLayer(points, {
       radius: 20,
@@ -55,7 +55,7 @@ const GlobalHeatMapCases = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/total-cases`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LOCAL_URL}/total-cases`);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data: ", error);

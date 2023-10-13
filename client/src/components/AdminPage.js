@@ -18,7 +18,7 @@ function AdminPage() {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/admin/search?q=${query}`
+        `${process.env.REACT_APP_BACKEND_LOCAL_URL}/admin/search?q=${query}`
       );
       setCountries(response.data);
       setSelectedCountry(null); // Reset selectedCountry on new search
@@ -30,7 +30,7 @@ function AdminPage() {
   const handleUpdate = async (countryId) => {
     try {
       await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/admin/update/${countryId}`,
+        `${process.env.REACT_APP_BACKEND_LOCAL_URL}/admin/update/${countryId}`,
         formData,
         {
           withCredentials: true,
@@ -63,7 +63,7 @@ function AdminPage() {
 
   const handleDelete = async (countryId) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/admin/delete/${countryId}`);
+      await axios.delete(`${process.env.REACT_APP_BACKEND_LOCAL_URL}/admin/delete/${countryId}`);
       setCountries(countries.filter((country) => country.id !== countryId));
       toast.success('Country deleted successfully!', {
         position: "top-center",
@@ -110,7 +110,7 @@ function AdminPage() {
         />
         <button
           onClick={handleSearch}
-          className="bg-pink-500 text-white rounded-r-md px-4 py-2 hover:bg-pink-400"
+          className="bg-pink-600 text-white rounded-r-md px-4 py-2 hover:bg-pink-400"
         >
           Search
         </button>
@@ -130,13 +130,13 @@ function AdminPage() {
               <div>
                 <button
                   onClick={() => handleEdit(country)}
-                  className="bg-pink-500 text-white rounded-md px-4 py-1 mr-2 hover:bg-pink-400"
+                  className="bg-pink-600 text-white rounded-md px-4 py-1 mr-2 hover:bg-pink-400"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(country.id)}
-                  className="bg-pink-300 text-white rounded-md px-4 py-1 hover:bg-pink-500"
+                  className="bg-pink-300 text-white rounded-md px-4 py-1 hover:bg-pink-600"
                 >
                   Delete
                 </button>
@@ -213,7 +213,7 @@ function AdminPage() {
             />
             <button
               onClick={() => handleUpdate(selectedCountry.id)}
-              className="mt-4 bg-pink-500 text-white w-full py-2 rounded-md hover:bg-pink-400"
+              className="mt-4 bg-pink-600 text-white w-full py-2 rounded-md hover:bg-pink-400"
             >
               Update Data
             </button>

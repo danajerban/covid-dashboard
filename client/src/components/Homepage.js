@@ -22,7 +22,7 @@ function Homepage() {
             />
             <div className="block w-12 h-6 rounded-full"></div>
             <div
-              className={`dot absolute left-1 top-0.5 bg-pink-500 w-5 h-5 rounded-full transition transform duration-500 ease-in-out ${
+              className={`dot absolute left-1 top-0.5 bg-pink-600 w-5 h-5 rounded-full transition transform duration-500 ease-in-out ${
                 view === "Deaths" ? "translate-x-full" : ""
               }`}
             />
@@ -42,7 +42,7 @@ function Homepage() {
             />
             <div className="block w-12 h-6 rounded-full"></div>
             <div
-              className={`dot absolute left-1 top-0.5 bg-pink-500 w-5 h-5 rounded-full transition transform duration-500 ease-in-out ${
+              className={`dot absolute left-1 top-0.5 bg-pink-600 w-5 h-5 rounded-full transition transform duration-500 ease-in-out ${
                 mapType === "Heatmap" ? "translate-x-full" : ""
               }`}
             />

@@ -18,7 +18,7 @@ function Login({onLoginStatusChange}) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_LOCAL_URL}/login`, {
         username,
         password,
       });
@@ -51,15 +51,15 @@ function Login({onLoginStatusChange}) {
   };
 
   return (
-    <div className="p-4 justify-center items-center flex flex-1">
+    <div className="p-16 justify-center items-center flex flex-1">
       <form
         onSubmit={handleLogin}
-        className="flex flex-col border-2 border-gray-300 rounded-xl p-4 gap-4"
+        className="flex flex-col border-2 w-96 border-gray-300 rounded-xl p-8 gap-4"
       >
         <div>
           <label
             htmlFor="username"
-            className="block text-sm font-medium text-center leading-6 text-gray-800"
+            className="block text-sm font-medium leading-6 text-gray-800"
           >
             Username
           </label>
@@ -77,7 +77,7 @@ function Login({onLoginStatusChange}) {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium leading-6 text-center text-gray-800"
+            className="block text-sm font-medium leading-6 text-gray-800"
           >
             Password
           </label>
@@ -94,7 +94,7 @@ function Login({onLoginStatusChange}) {
         </div>
         <button
           type="submit"
-          className="mt-5 flex w-full justify-center rounded-md bg-pink-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-500 focus:outline-none"
+          className="mt-5 flex w-full justify-center rounded-md bg-pink-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-600 focus:outline-none"
         >
           Log in
         </button>

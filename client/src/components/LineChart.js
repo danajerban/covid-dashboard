@@ -228,13 +228,13 @@ function LineChart({ data }) {
         <div className="w-full flex flex-col space-y-1 mt-4">
           <button
             onClick={filterDates}
-            className="bg-pink-400 text-white rounded-lg p-2 w-full hover:bg-pink-600"
+            className="bg-pink-600 text-white rounded-lg p-2 w-full hover:bg-pink-400"
           >
             Filter
           </button>
           <button
             onClick={resetDates}
-            className="bg-pink-400 text-white rounded-lg p-2 w-full hover:bg-pink-600"
+            className="bg-pink-600 text-white rounded-lg p-2 w-full hover:bg-pink-400"
           >
             Reset Filter
           </button>
@@ -242,7 +242,7 @@ function LineChart({ data }) {
         <div className="w-full mt-4">
           <button
             onClick={resetZoom}
-            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-500"
+            className="bg-pink-300 text-white rounded-lg p-2 w-full hover:bg-pink-600"
           >
             Reset Zoom
           </button>

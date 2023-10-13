@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import  {toast} from 'react-toastify'
 function SearchBar() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
@@ -10,13 +10,22 @@ function SearchBar() {
     e.preventDefault();
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/search?q=${query}`
+        `${process.env.REACT_APP_BACKEND_LOCAL_URL}/search?q=${query}`
       );
       const firstCountry = response.data[0];
       if (firstCountry) {
         navigate(`/country/${firstCountry.id}`);
       } else {
-        console.error("No countries found");
+        toast.error('Country not found, please check for typos', {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       }
     } catch (error) {
       console.error("Error searching countries:", error);
@@ -39,7 +48,7 @@ function SearchBar() {
         />
         <button
           type="submit"
-          className="bg-pink-500 text-white font-bold py-2 px-4 rounded-r-md hover:bg-pink-400 focus:outline-none focus:shadow-outline"
+          className="bg-pink-600 text-white font-bold py-2 px-4 rounded-r-md hover:bg-pink-400 focus:outline-none focus:shadow-outline"
         >
           Search
         </button>

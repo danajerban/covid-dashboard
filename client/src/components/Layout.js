@@ -30,12 +30,12 @@ function Layout({ children, isLoggedIn, onLoginStatusChange }) {
   return (
     <>
       <nav className="bg-pink-100 border-b border-pink-300">
-        <div className="flex justify-between items-center p-4">
+        <div className="flex justify-between items-center p-2">
           <div className="flex items-center">
             <img
               src={`${process.env.PUBLIC_URL}/covid logo.png`}
               alt="Covid-19 logo"
-              className="h-12 w-auto mr-4"
+              className="h-12 w-auto mr-4 ml-4"
             />
 
             <Link to="/">
@@ -45,7 +45,7 @@ function Layout({ children, isLoggedIn, onLoginStatusChange }) {
             </Link>
           </div>
           <SearchBar />
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 mr-4">
         {isLoggedIn ? (
           <>
             <Link to="/admin" className="text-pink-600 hover:text-pink-900">
