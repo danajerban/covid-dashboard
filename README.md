@@ -18,11 +18,13 @@ This project is a data dashboard to visualize COVID-19 statistics from different
 - Node.js
 - Express
 - Axios (for API calls)
-- JSON Web Tokens (JWT) for authentication
+- JSON Web Tokens (for authentication)
 - Postgresql 15 & Prisma ORM
 - Chart.js
 - Leaflet
 - Jest (for testing back-end)
+- React Toast (for notifications)
+- Docker
 
 ## Running this app
 
@@ -46,9 +48,28 @@ This project is a data dashboard to visualize COVID-19 statistics from different
 ### For Docker run:
 
 1. Open Docker Desktop app
-2. Run the containers: `docker compose build && docker compose up -d`
+2. Set up the environment variables:
+   - Create a `.env` file in the root directory with the following format:
 
-### OTHER:
+     ```
+     DATABASE_URL='postgresql://covid:covid@db/covid_dashboard?schema=public&connection_limit=5&pool_timeout=120'
+     JWT_SECRET='YOUR KEY OF CHOICE'
+     ```
+
+3. Run the 3 containers: `docker compose build && docker compose up -d`
+
+### Other:
 
 1. To explore the database: `npx prisma studio`
 2. For testing the back-end: `npm run test`
+
+### Screenshots:
+
+![GitHub Image](/screenshots/Choropleth-Map.png)
+![GitHub Image](/screenshots/Global-Heatmap.png)
+![GitHub Image](/screenshots/Line-Chart.png)
+![GitHub Image](/screenshots/Pie-Chart.png)
+![GitHub Image](/screenshots/Admin-Panel.png)
+![GitHub Image](/screenshots/Login-Register.png)
+![GitHub Image](/screenshots/Data-Range-Selectors.png)
+![GitHub Image](/screenshots/Tooltips-Zooming.png)

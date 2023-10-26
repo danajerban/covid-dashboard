@@ -18,7 +18,6 @@ function CountryPage() {
           `${process.env.REACT_APP_BACKEND_LOCAL_URL}/search/${countryId}`
         );
         setData(response.data);
-        //console.log("Country data:", response.data);
       } catch (error) {
         console.error("Error fetching country data:", error);
       }
@@ -34,7 +33,6 @@ function CountryPage() {
           `${process.env.REACT_APP_BACKEND_LOCAL_URL}/search/totals/${countryId}`
         );
         setTotalData(response.data);
-        //console.log("Country data:", response.data);
       } catch (error) {
         console.error("Error fetching country data:", error);
       }

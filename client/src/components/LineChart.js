@@ -154,7 +154,6 @@ function LineChart({ data }) {
     // https://www.youtube.com/watch?v=vmp3czGfw2U and the documentation of chart.js
     // Initially I wanted to filter in the back-end as well but I could see there was no point on
     // doing so, filtering in front-end worked just fine
-    // I could write this code better but sticked to this logic because 1 it works, 2 is pretty understandable
 
     chartInstance.current.resetZoom();
     //we use setHours(0, 0, 0, 0) to skip the time part for all cases because we will work with milliseconds time (which includes the time)

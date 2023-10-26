@@ -6,8 +6,8 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_USER: 'erbandanaj'
-      POSTGRES_PASSWORD: 'think'
+      POSTGRES_USER: 'covid'
+      POSTGRES_PASSWORD: 'covid'
       POSTGRES_DB: 'covid_dashboard'
 
   server:

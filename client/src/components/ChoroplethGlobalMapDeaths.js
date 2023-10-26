@@ -6,7 +6,6 @@ import "leaflet/dist/leaflet.css";
 import geojsonData from "../countries.geo.json";
 
 // sources: https://leafletjs.com/examples/choropleth/ && https://github.com/johan/world.geo.json for GeoJSON data
-// and Chat GPT for the legend of the table and the math behind the color intensities
 // basically the intensity varies from 0 - 1.0 and the color is based on the intensity
 
 const getColor = (d, maxDeaths) => {
