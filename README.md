@@ -63,13 +63,11 @@ This project is a data dashboard to visualize COVID-19 statistics from different
 1. To explore the database: `npx prisma studio`
 2. For testing the back-end: `npm run test`
 
-### Screenshots:
+### Quick Demo:
 
-![GitHub Image](/screenshots/Choropleth-Map.png)
-![GitHub Image](/screenshots/Global-Heatmap.png)
-![GitHub Image](/screenshots/Line-Chart.png)
-![GitHub Image](/screenshots/Pie-Chart.png)
-![GitHub Image](/screenshots/Admin-Panel.png)
-![GitHub Image](/screenshots/Login-Register.png)
-![GitHub Image](/screenshots/Data-Range-Selectors.png)
-![GitHub Image](/screenshots/Tooltips-Zooming.png)
+
+
+https://github.com/danajerban/covid19-dashboard/assets/125399344/1125c8e9-a4cc-4b59-9409-5a8874112ca8
+
+
+For more, checkout the screenshots..
